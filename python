@@ -1,0 +1,77 @@
+NAMA: FARID WILDANA
+NIM:  I. 2610910
+def validasi_input(nama_komponen, nilai):
+    """Fungsi untuk memvalidasi apakah input berada pada rentang 0-100."""
+    if nilai < 0 or nilai > 100:
+        print(f"Error: {nama_komponen} harus berada pada rentang 0-100 (Nilai input: {nilai}).")
+        return False
+    return True
+
+def main():
+    # 1. Input dari pengguna
+    nama = input("Nama mahasiswa: ")
+    
+    tugas = float(input("Nilai tugas (0-100): "))
+    uts = float(input("Nilai UTS (0-100): "))
+    uas = float(input("Nilai UAS (0-100): "))
+    kehadiran = float(input("Kehadiran % (0-100): "))
+
+    # 2. Validasi input (memanggil fungsi validasi)
+    if not validasi_input("Nilai tugas", tugas):
+        return
+    if not validasi_input("Nilai UTS", uts):
+        return
+    if not validasi_input("Nilai UAS", uas):
+        return
+    if not validasi_input("Persentase kehadiran", kehadiran):
+        return
+
+    # 3. Perhitungan nilai akhir
+    nilai_akhir = (tugas * 0.30) + (uts * 0.30) + (uas * 0.40)
+
+    # 4. Penentuan nilai huruf (if-elif-else)
+    if nilai_akhir > 85:
+        nilai_huruf = "A"
+    elif nilai_akhir >= 70:
+        nilai_huruf = "B"
+    elif nilai_akhir >= 60:
+        nilai_huruf = "C"
+    elif nilai_akhir >= 50:
+        nilai_huruf = "D"
+    else:
+        nilai_huruf = "E"
+
+    # 5. Penentuan status kelulusan (if bersarang)
+    if nilai_huruf in ["A", "B", "C", "D"]:
+        if kehadiran >= 75:
+            status = "Lulus"
+        else:
+            status = "Tidak Lulus (kehadiran kurang)"
+    else:
+        status = "Tidak Lulus (nilai kurang)"
+
+    # 6. Keterangan predikat (match-case)
+    match nilai_huruf:
+        case "A":
+            predikat = "Sangat Baik"
+        case "B":
+            predikat = "Baik"
+        case "C":
+            predikat = "Cukup"
+        case "D":
+            predikat = "Kurang"
+        case "E":
+            predikat = "Sangat Kurang"
+        case _:
+            predikat = "Tidak Terdefinisi"
+
+    # Output hasil
+    print(f"\nNama: {nama}")
+    print(f"Tugas: {tugas:g} | UTS: {uts:g} | UAS: {uas:g} | Kehadiran: {kehadiran:g}%")
+    print(f"Nilai Akhir: {nilai_akhir:.1f}")
+    print(f"Nilai Huruf: {nilai_huruf} ({predikat})")
+    print(f"Status: {status}")
+
+if __name__ == "__main__":
+    main()
+
